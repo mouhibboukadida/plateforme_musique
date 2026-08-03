@@ -83,7 +83,6 @@ return (
         <button className="md:hidden text-white" onClick={() => setIsMobileMenuOpen(!mobileMenuOpen)} aria-label="Toggle mobile menu">
           {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
-
         {/* Mobile Nav */}
       <AnimatePresence>
         {mobileMenuOpen && (
@@ -93,35 +92,34 @@ return (
             exit={{ opacity: 0, y: -20 }}
             className="absolute top-full left-0 w-full bg-background/95 backdrop-blur-xl border-b border-white/10 flex flex-col items-center py-6 gap-6 md:hidden shadow-2xl"
           >
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                className="text-lg font-medium text-gray-300 hover:text-white"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {link.name}
+              </a>
+            ))}
 
-
-
-
-
-            
-            </AnimatePresence>
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
+            <div className='flex gap-4 my-2'>
+                {languages.map((l) => (
+                  <button
+                    key={l}
+                    onClick={() => setLang(l)}
+                    className={`px-3 py-1 rounded-full text-sm border ${lang === l ? "border-accent text-accent bg-accent/10 text-white border-accent" : "border-gray-500 text-gray-300 hover:bg-white/5 transition-colors"}`}
+                  >
+                    {l}
+                  </button>
+                ))}
+            </div>
+            <Button variant="primary" onClick={() =>  { setMobileMenuOpen(false); document.getElementById('waitlist').scrollIntoView({ behavior: 'smooth' }); }}>
+              Join Waitlist
+            </Button>
+          </motion.div>
+        )}                                                                                  
+            </AnimatePresence>        
         </nav>
-
-
-
-
-
-
-
-
-
-
+    );
+}
