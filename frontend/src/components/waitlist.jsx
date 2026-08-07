@@ -5,19 +5,24 @@ import axios from "axios";
 import { CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 
 export const Waitlist = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [number, setNumber] = useState("");
   const [status, setStatus] = useState("idle");
   const [message, setMessage] = useState("");
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!email) return;
+    if (!name || !email || number) return;
 
     setStatus("loading");
     setTimeout(() => {
-      setStatus("success");
-      setMessage("You're on the list! Keep an eye on your inbox.");
+      setStatus("success"); 
+      setMessage(`Thanks ${name} ! You're on the list! Keep an eye on your inbox.`);
       setEmail("");
+      setName("");
+      setNumber("");
        }, 1500);
   };
 
@@ -41,6 +46,18 @@ export const Waitlist = () => {
           </p>
 
           <form onSubmit={handleSubmit} className="relative max-w-md mx-auto flex flex-col gap-4">
+                   <div className="relative">
+              <input
+                type="text"
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Enter your full name"
+                disabled={status === "loading" || status === "success"}
+                className="w-full bg-white/5 border border-white/10 rounded-full px-6 py-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all disabled:opacity-50"
+              />
+            </div>
+
             <div className="relative">
               <input
                 type="email"
@@ -48,6 +65,18 @@ export const Waitlist = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email address"
+                disabled={status === "loading" || status === "success"}
+                className="w-full bg-white/5 border border-white/10 rounded-full px-6 py-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all disabled:opacity-50"
+              />
+            </div>
+
+            <div className="relative">
+              <input
+                type="text"
+                required
+                value={number}
+                onChange={(e) => setNumber(e.target.value)}
+                placeholder="Enter your number"
                 disabled={status === "loading" || status === "success"}
                 className="w-full bg-white/5 border border-white/10 rounded-full px-6 py-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all disabled:opacity-50"
               />
@@ -94,3 +123,7 @@ export const Waitlist = () => {
     </section>
   );
 };
+
+
+
+
