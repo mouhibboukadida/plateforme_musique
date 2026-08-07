@@ -30,7 +30,7 @@ return (
     >
       <div className="container mx-auto px-6 lg:px-12 flex justify-between items-center">
         <a href="#home" className="text-2xl font-bold tracking-tighter text-white">
-          PROD<span className="text-accent">.</span>
+          MB PROD<span className="text-accent">.</span>
         </a>
         {/*desktop navbar */}
         <ul className="flex gap-6">
