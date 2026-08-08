@@ -3,6 +3,8 @@ import {Menu,X, Globe, ChevronDown} from 'lucide-react';
 import{Button} from './button';
 import {motion,AnimatePresence} from 'framer-motion';
 
+
+
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setIsMobileMenuOpen] = useState(false);

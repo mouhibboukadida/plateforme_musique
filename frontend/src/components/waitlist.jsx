@@ -14,7 +14,7 @@ export const Waitlist = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!name || !email || number) return;
+    if (!name || !email || !number) return;
 
     setStatus("loading");
     setTimeout(() => {
