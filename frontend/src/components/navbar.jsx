@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import {useState,useEffect} from 'react';
 import {Menu,X, Globe, ChevronDown} from 'lucide-react';
 import{Button} from './button';
@@ -9,9 +10,25 @@ export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [lang, setLang] = useState("EN");
+  const { t, i18n } = useTranslation();
   const [langOpen, setLangOpen] = useState(false);
 
-  const languages = ["EN", "FR", "TN"];
+  const changeLanguage= (lang) =>{
+    i18n.changeLanguage(lang);
+    document.dir = lang === "ar" ? "rtl" : "ltr";
+    document.documentElement.lang = lang;
+  };
+
+  const languages= [
+    { code: "en", label: "English" },
+    { code: "fr", label: "Francais" },
+    { code: "ar", label: "العربية" }
+
+  ]
+
+  
+
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -47,6 +64,8 @@ return (
                
         <div className="relative">
             <button 
+              onChange={(e)=> changeLanguage(e.target.value)}
+              value={i18n.languages}
               onClick={() => setLangOpen(!langOpen)}
               className="flex items-center gap-1.5 text-gray-300 hover:text-white transition-colors text-sm font-medium focus:outline-none"
             >
