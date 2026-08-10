@@ -1,22 +1,27 @@
+// src/components/Features.jsx
 import { motion } from "framer-motion";
 import { Zap, Users, Sparkles } from "lucide-react";
+import { useTranslation } from 'react-i18next'; // ← AJOUTER
 
 export const Features = () => {
+  const { t } = useTranslation(); // ← AJOUTER
+
+  // Les données sont maintenant dans les traductions
   const features = [
     {
       icon: <Zap className="w-8 h-8 text-primary" />,
-      title: "Lightning Fast Workflow",
-      description: "Experience zero latency and an optimized interface designed to keep you in the creative zone without interruptions.",
+      title: t('features.feature1Title'),        // ← MODIFIÉ
+      description: t('features.feature1Desc'),   // ← MODIFIÉ
     },
     {
       icon: <Users className="w-8 h-8 text-secondary" />,
-      title: "Collaboration",
-      description: "Connect with producers worldwide. Share projects, stems, and ideas in real-time within a unified workspace.",
+      title: t('features.feature2Title'),        // ← MODIFIÉ
+      description: t('features.feature2Desc'),   // ← MODIFIÉ
     },
     {
       icon: <Sparkles className="w-8 h-8 text-accent" />,
-      title: "AI Powered Tools",
-      description: "Harness the power of intelligent assistants for mastering, mixing suggestions, and creative block breakthroughs.",
+      title: t('features.feature3Title'),        // ← MODIFIÉ
+      description: t('features.feature3Desc'),   // ← MODIFIÉ
     }
   ];
 
@@ -29,9 +34,11 @@ export const Features = () => {
           viewport={{ once: true }}
           className="text-center max-w-2xl mx-auto mb-16"
         >
-          <h2 className="text-3xl md:text-5xl font-bold mb-6">Designed for Modern Creators</h2>
+          <h2 className="text-3xl md:text-5xl font-bold mb-6">
+            {t('features.title')} {/* ← MODIFIÉ */}
+          </h2>
           <p className="text-gray-400 text-lg">
-            Everything you need to produce, mix, and master your next hit, all in one seamless environment.
+            {t('features.subtitle')} {/* ← MODIFIÉ */}
           </p>
         </motion.div>
 

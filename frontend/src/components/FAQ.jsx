@@ -1,24 +1,28 @@
+// src/components/FAQ.jsx
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import { useTranslation } from 'react-i18next'; 
 
 export const FAQ = () => {
+  const { t } = useTranslation(); 
+
   const faqs = [
     {
-      question: "When will the platform launch?",
-      answer: "We are currently in private beta and plan to roll out public access in early 2025. Joining the waitlist ensures you get priority access as soon as we open up more spots."
+      question: t('faq.question1'),
+      answer: t('faq.answer1')
     },
     {
-      question: "Is joining free?",
-      answer: "Yes! Joining the waitlist is 100% free. Early adopters will also receive exclusive perks and discounted pricing when the platform officially launches."
+      question: t('faq.question2'),
+      answer: t('faq.answer2')
     },
     {
-      question: "Can I leave the waitlist?",
-      answer: "Of course. You can unsubscribe from our emails at any time, which will automatically remove you from the waitlist."
+      question: t('faq.question3'),
+      answer: t('faq.answer3')
     },
     {
-      question: "Will there be AI features?",
-      answer: "Yes, we are integrating cutting-edge AI tools designed specifically for music production, including stem separation, intelligent EQ suggestions, and mastering assistants."
+      question: t('faq.question4'),
+      answer: t('faq.answer4')
     }
   ];
 
@@ -28,8 +32,8 @@ export const FAQ = () => {
     <section id="faq" className="py-24">
       <div className="container mx-auto px-6 lg:px-12 max-w-3xl">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold mb-4">Frequently Asked Questions</h2>
-          <p className="text-gray-400">Everything you need to know about the waitlist and upcoming release.</p>
+          <h2 className="text-3xl md:text-5xl font-bold mb-4">{t('faq.title')}</h2> 
+          <p className="text-gray-400">{t('faq.subtitle')}</p> 
         </div>
 
         <div className="space-y-4">

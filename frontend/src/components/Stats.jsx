@@ -2,8 +2,8 @@ import { motion } from "framer-motion";
 
 export const Stats = () => {
   const stats = [
-    { value: "10000+", label: "Artists Interested" },
-    { value: "150+", label: "Countries" },
+    { value: "100+", label: "Artists Interested" },
+    { value: "10+", label: "Countries" },
     { value: "24/7", label: "Cloud Access" },
     { value: "100%", label: "Free Waitlist" },
   ];

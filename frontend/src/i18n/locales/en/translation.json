@@ -21,10 +21,28 @@
         "description":"Spots for the early beta are limited. Join the waitlist today to guarantee your access when we launch",
         "namePlaceholder":"Enter your full name",
         "emailPlaceholder":"Enter your email address",
+        "numberPlaceholder":"Enter your phone number",
         "buttonText":"Join Waitlist",
         "successMessage":"Thanks {{name}}! You're on the list! Keep an eye on your inbox.",
         "errorMessage":"Something went wrong. Please try again."
     },
+
+    
+
+
+  "features": {
+    "title": "Designed for Modern Creators",
+    "subtitle": "Everything you need to produce, mix, and master your next hit, all in one seamless environment.",
+    "feature1Title": "Lightning Fast Workflow",
+    "feature1Desc": "Experience zero latency and an optimized interface designed to keep you in the creative zone without interruptions.",
+    "feature2Title": "Collaboration",
+    "feature2Desc": "Connect with producers worldwide. Share projects, stems, and ideas in real-time within a unified workspace.",
+    "feature3Title": "AI Powered Tools",
+    "feature3Desc": "Harness the power of intelligent assistants for mastering, mixing suggestions, and creative block breakthroughs."
+  },
+
+
+
 
     "footer":{
         "description":"Building the next generation of creative tools for musicians, producers, and audio engineers.",

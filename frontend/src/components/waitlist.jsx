@@ -3,8 +3,10 @@ import { motion } from "framer-motion";
 import { Button } from "./Button";
 import axios from "axios";
 import { CheckCircle, AlertCircle, Loader2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export const Waitlist = () => {
+  const {t}= useTranslation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
@@ -19,7 +21,7 @@ export const Waitlist = () => {
     setStatus("loading");
     setTimeout(() => {
       setStatus("success"); 
-      setMessage(`Thanks ${name} ! You're on the list! Keep an eye on your inbox.`);
+      setMessage(t('waitlist.successMessage', { name }));
       setEmail("");
       setName("");
       setNumber("");
@@ -40,9 +42,9 @@ export const Waitlist = () => {
           {/* Decorative blur */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-1/2 bg-primary/20 blur-[100px] pointer-events-none"></div>
 
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">Secure Your Spot</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">{t('waitlist.title')}</h2>
           <p className="text-gray-400 text-lg mb-10 max-w-xl mx-auto">
-            Spots for the early beta are limited. Join the waitlist today to guarantee your access when we launch.
+            {t('waitlist.description')}
           </p>
 
           <form onSubmit={handleSubmit} className="relative max-w-md mx-auto flex flex-col gap-4">
@@ -52,7 +54,7 @@ export const Waitlist = () => {
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Enter your full name"
+                placeholder={t('waitlist.namePlaceholder')}
                 disabled={status === "loading" || status === "success"}
                 className="w-full bg-white/5 border border-white/10 rounded-full px-6 py-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all disabled:opacity-50"
               />
@@ -64,7 +66,7 @@ export const Waitlist = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email address"
+                placeholder={t('waitlist.emailPlaceholder')}
                 disabled={status === "loading" || status === "success"}
                 className="w-full bg-white/5 border border-white/10 rounded-full px-6 py-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all disabled:opacity-50"
               />
@@ -76,7 +78,7 @@ export const Waitlist = () => {
                 required
                 value={number}
                 onChange={(e) => setNumber(e.target.value)}
-                placeholder="Enter your number"
+                placeholder={t('waitlist.numberPlaceholder')}
                 disabled={status === "loading" || status === "success"}
                 className="w-full bg-white/5 border border-white/10 rounded-full px-6 py-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all disabled:opacity-50"
               />
@@ -91,7 +93,7 @@ export const Waitlist = () => {
               {status === "loading" ? (
                 <Loader2 className="w-6 h-6 animate-spin" />
               ) : (
-                "Join Waitlist"
+                t('waitlist.buttonText')
               )}
             </Button>
 

@@ -20,11 +20,26 @@
         "title":"Réservez Votre Place",
         "description":"Les places pour la bêta anticipée sont limitées. Rejoignez la liste d'attente aujourd'hui pour garantir votre accès lors du lancement.",
         "namePlaceholder":"Entrer votre nom complet",
-        "emailPlaceholder":"Entrer  votre adresse email",
+        "emailPlaceholder":"Entrer votre adresse email",
+        "numberPlaceholder":"Entrer votre numéro ",
         "buttonText":"rejoindre la liste",
         "successMessage":"Merci {{name}} ! Vous êtes sur la liste ! Surveillez votre boîte de réception.",
         "errorMessage":"une erreur s'est produite. Veuillez réessayer."
     },
+
+
+  "features": {
+    "title": "Conçu pour les Créateurs Modernes",
+    "subtitle": "Tout ce dont vous avez besoin pour produire, mixer et masteriser votre prochain succès, dans un environnement unifié.",
+    "feature1Title": "Workflow Ultra Rapide",
+    "feature1Desc": "Profitez d'une latence zéro et d'une interface optimisée pour rester dans la zone créative sans interruptions.",
+    "feature2Title": "Collaboration",
+    "feature2Desc": "Connectez-vous avec des producteurs du monde entier. Partagez des projets, des stems et des idées en temps réel.",
+    "feature3Title": "Outils Alimentés par l'IA",
+    "feature3Desc": "Tirez parti d'assistants intelligents pour le mastering, les suggestions de mixage et les percées créatives."
+  },
+
+
 
     "footer":{
         "description":"Construire la prochaine génération d'outils créatifs pour les musiciens, producteurs et ingénieurs du son.",
