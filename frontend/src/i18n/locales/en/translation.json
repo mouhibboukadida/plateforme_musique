@@ -1,0 +1,50 @@
+{
+    "navbar":{
+        "home":"Home",
+        "features":"Features",
+        "faq":"FAQ",
+        "join":"Join Waitlist"
+    },
+
+    "hero":{
+        "badge":"Early Access Invites Open",
+        "title":"The Future of",
+        "titleHighlight":"Music Production",
+        "titleEnd":"Starts Here.",
+        "description":"Join the waitlist to get early access to our next-generation platform built for producers, beatmakers and artists.",
+        "joinButton":"Join waitlist",
+        "learnButton":"Learn More"
+    },
+    
+    "waitlist":{
+        "title":"Secure Your Spot",
+        "description":"Spots for the early beta are limited. Join the waitlist today to guarantee your access when we launch",
+        "namePlaceholder":"Enter your full name",
+        "emailPlaceholder":"Enter your email address",
+        "buttonText":"Join Waitlist",
+        "successMessage":"Thanks {{name}}! You're on the list! Keep an eye on your inbox.",
+        "errorMessage":"Something went wrong. Please try again."
+    },
+
+    "footer":{
+        "description":"Building the next generation of creative tools for musicians, producers, and audio engineers.",
+        "navigation":"Navigation",
+        "connect":"Connect",
+        "rights":"MB PROD. All rights reserved.",
+        "privacy":"Privacy Policy",
+        "terms":"Terms of service"
+    },
+
+    "faq":{
+        "title":"Freaquetly Asked Questions",
+        "subtitle":"Everything you need to know about the waitlist and upcoming release.",
+        "question1":"When will the platform launch?",
+        "answer1":"We are currently in private beta and plan to roll out public access in early 2025. Joining the waitlist ensures you get priority access as soon as we open up more spots",
+        "question2":"Is joining free?",
+        "answer2":"Yes! Joining the waitlist is 100% free. Early adopters will also receive exclusive perks and discounted pricing when the platform officially launches.",
+        "question3":"Can I leave the waitlist?",
+        "answer3":"Of course. You can unsubscribe from our emails at any time, which will automatically remove you from the waitlist.",
+        "question4":"Will there be AI features?",
+        "answer4":"Yes, we are integrating cutting-edge AI tools designed specifically for music production, including stem separation, intelligent EQ suggestions, and mastering assistants"
+    }
+}

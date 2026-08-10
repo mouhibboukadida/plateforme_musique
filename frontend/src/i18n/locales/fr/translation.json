@@ -1,0 +1,50 @@
+{
+    "navbar":{
+        "home":"Accueil",
+        "features":"Fonctionnalités",
+        "faq":"FAQ",
+        "join":"Rejoindre la liste"
+    },
+
+    "hero":{
+        "badge":"Invitation accés Anticipé Ouvertes",
+        "title":"L'avenir de la",
+        "titleHighlight":"Production Musicale",
+        "titleEnd":"Commence Ici.",
+        "description":"Rejoignez la liste d'attente pour obtenir un accès anticipé à notre plateforme nouvelle génération conçue pour les producteurs, beatmakers et artistes.",
+        "joinButton":"rejoindre la liste",
+        "learnButton":"En savoir plus"
+    },
+    
+    "waitlist":{
+        "title":"Réservez Votre Place",
+        "description":"Les places pour la bêta anticipée sont limitées. Rejoignez la liste d'attente aujourd'hui pour garantir votre accès lors du lancement.",
+        "namePlaceholder":"Entrer votre nom complet",
+        "emailPlaceholder":"Entrer  votre adresse email",
+        "buttonText":"rejoindre la liste",
+        "successMessage":"Merci {{name}} ! Vous êtes sur la liste ! Surveillez votre boîte de réception.",
+        "errorMessage":"une erreur s'est produite. Veuillez réessayer."
+    },
+
+    "footer":{
+        "description":"Construire la prochaine génération d'outils créatifs pour les musiciens, producteurs et ingénieurs du son.",
+        "navigation":"Navigation",
+        "connect":"Connecter",
+        "rights":"MB PROD. Tous droits réservés.",
+        "privacy":"Politique de confidentialité",
+        "terms":"Conditions d'utilisation"
+    },
+
+    "faq":{
+        "title":"Questions Fréquemment Posées",
+        "subtitle":"Tout ce que vous devez savoir sur la liste d'attente et la sortie à venir.",
+        "question1":"Quand la plateforme sera-t-elle lancée?",
+        "answer1":"Nous sommes actuellement en bêta privée et prévoyons un accès public début 2025. Rejoindre la liste d'attente vous garantit un accès prioritaire dès que nous ouvrirons plus de places.",
+        "question2":"L'iscription est-elle gratuite ?",
+        "answer2":"Oui ! Rejoindre la liste d'attente est 100% gratuit. Les premiers adoptants recevront également des avantages exclusifs et des tarifs réduits lors du lancement officiel de la plateforme.",
+        "question3":"Puis-je quitter la liste d'attente ?",
+        "answer3":"Bien sûr. Vous pouvez vous désabonner de nos emails à tout moment, ce qui vous retirera automatiquement de la liste d'attente.",
+        "question4":"Y aura-t-il des fonctionnalités IA ?",
+        "answer4":"Oui, nous intégrons des outils IA de pointe conçus spécifiquement pour la production musicale, y compris la séparation de pistes, des suggestions d'EQ intelligentes et des assistants de mastering."
+    }
+}

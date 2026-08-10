@@ -36,10 +36,12 @@ export const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+
   const navLinks = [
-  { name: "Home", href: "#home" },
-  { name: "Features", href: "#features" },
-  { name: "FAQ", href: "#faq" },
+  { name: t('Navbar.home'), href: "#home" },
+  { name: t('Navbar.features'), href: "#features" },
+  { name: t('Navbar.faq'), href: "#faq" },
 ];
 return (
     <nav
@@ -70,7 +72,7 @@ return (
               className="flex items-center gap-1.5 text-gray-300 hover:text-white transition-colors text-sm font-medium focus:outline-none"
             >
               <Globe size={16} />
-              {lang}
+              {i18n.language.toUpperCase()}
               <ChevronDown size={14} className={`transition-transform duration-200 ${langOpen ? "rotate-180" : ""}`} />
             </button>
             <AnimatePresence>
@@ -85,10 +87,10 @@ return (
                   {languages.map((l) => (
                     <button
                       key={l}
-                      onClick={() => { setLang(l); setLangOpen(false); }}
-                      className={`w-full text-left px-4 py-2 text-sm hover:bg-white/5 transition-colors ${lang === l ? "text-accent font-medium" : "text-gray-300"}`}
+                      onClick={() => changeLanguage(l.code)}
+                      className={`w-full text-left px-4 py-2 text-sm hover:bg-white/5 transition-colors ${i18n.language === l.code ? "text-accent font-medium" : "text-gray-300"}`}
                     >
-                      {l}
+                      {l.label}
                     </button>
                   ))}
                 </motion.div>
@@ -97,7 +99,7 @@ return (
           </div>
 
           <Button variant="primary" onClick={() => document.getElementById('waitlist').scrollIntoView({ behavior: 'smooth' })}>
-            Join Waitlist
+            {t('navbar.join')}
           </Button>
         </div>
         {/* Mobile Menu Toggle */}
@@ -128,15 +130,15 @@ return (
                 {languages.map((l) => (
                   <button
                     key={l}
-                    onClick={() => setLang(l)}
-                    className={`px-3 py-1 rounded-full text-sm border ${lang === l ? "border-accent text-accent bg-accent/10 text-white border-accent" : "border-gray-500 text-gray-300 hover:bg-white/5 transition-colors"}`}
+                    onClick={() => changeLanguage(l.code)}
+                    className={`px-3 py-1 rounded-full text-sm border ${i18n.language===l.code ? "border-accent text-accent bg-accent/10 text-white border-accent" : "border-gray-500 text-gray-300 hover:bg-white/5 transition-colors"}`}
                   >
-                    {l}
+                    {l.code.toUpperCase()}
                   </button>
                 ))}
             </div>
             <Button variant="primary" onClick={() =>  { setMobileMenuOpen(false); document.getElementById('waitlist').scrollIntoView({ behavior: 'smooth' }); }}>
-              Join Waitlist
+              {t('navbar.join')}
             </Button>
           </motion.div>
         )}                                                                                  
