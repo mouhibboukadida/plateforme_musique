@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { Button } from "./Button";
-
+import {useTranslation} from 'react-i18next';
 export const Hero = () => {
+  const{t}=useTranslation();
   return (
     <section id="home" className="relative min-h-screen flex items-center pt-24 overflow-hidden">
       {/* Background Glow */}
@@ -20,24 +21,24 @@ export const Hero = () => {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
             </span>
-            Early Access Invites Open
+            {t('hero.badge')}
           </div>
           <h1 className="text-5xl md:text-7xl font-bold leading-tight tracking-tight">
-            The Future of <br />
+            {t('hero.title')}<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent">
-              Music Production
+              {t('hero.titleHighlight')}
             </span> <br />
-            Starts Here.
+            {t('hero.titleEnd')}
           </h1>
           <p className="text-lg md:text-xl text-gray-400 max-w-lg leading-relaxed">
-            Join the waitlist to get early access to our next-generation platform built for producers, beatmakers and artists.
+           {t('hero.description')}
           </p>
           <div className="flex flex-wrap gap-4 mt-4">
             <Button variant="primary" onClick={() => document.getElementById('waitlist').scrollIntoView({ behavior: 'smooth' })}>
-              Join Waitlist
+              {t('hero.joinButton')}
             </Button>
             <Button variant="secondary" onClick={() => document.getElementById('features').scrollIntoView({ behavior: 'smooth' })}>
-              Learn More
+             {t('hero.learnButton')}
             </Button>
           </div>
         </motion.div>
@@ -85,7 +86,6 @@ export const Hero = () => {
               <div className="h-4 w-3/4 bg-white/10 rounded-full"></div>
               <div className="h-4 w-1/2 bg-white/10 rounded-full"></div>
             </div>
-            
             {/* Floating Element */}
             <motion.div
                animate={{ y: [-10, 10, -10] }}

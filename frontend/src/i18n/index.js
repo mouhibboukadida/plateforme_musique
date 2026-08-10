@@ -1,26 +1,33 @@
+// src/i18n/index.js
 import i18n from 'i18next';
-import {initReactI18next, Translation} from "react-i18next";
-import LanguageDetector from 'i18next-browser-languageDetector';
+import { initReactI18next } from 'react-i18next';
+import LanguageDetector from 'i18next-browser-languagedetector';
 
+// Importer les traductions
 import en from './locales/en/translation.json';
 import fr from './locales/fr/translation.json';
 import ar from './locales/ar/translation.json';
 
-const resources={
-    en: {Translation: en},
-    fr: {Translation: fr},
-    ar: {Translation: ar}
+// Ressources de traduction
+const resources = {
+  en: { translation: en },
+  fr: { translation: fr },
+  ar: { translation: ar }
 };
-i18n.use(LanguageDetector)
 
-i18n.use(initReactI18next)
-
-i18n.init({
+i18n
+  // Détecter la langue du navigateur
+  .use(LanguageDetector)
+  // Connecter avec React
+  .use(initReactI18next)
+  // Initialiser
+  .init({
     resources,
-    lng: 'en',
-    interpolation:{
-        escapeValue: false
+    lng: 'en', // Langue par défaut
+    fallbackLng: 'en', // Langue de secours
+    interpolation: {
+      escapeValue: false // React gère déjà la sécurité
     }
-});
+  });
 
 export default i18n;
