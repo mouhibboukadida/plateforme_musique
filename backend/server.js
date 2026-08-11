@@ -1,11 +1,7 @@
-// server.js (à la racine de backend/)
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import pkg from 'pg';
 const { Pool } = pkg;
-
-dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -15,14 +11,17 @@ const pool = new Pool({
   host: process.env.DB_HOST || 'localhost',
   port: process.env.DB_PORT || 5432,
   user: process.env.DB_USER || 'postgres',
-  password: process.env.DB_PASSWORD || 'ton_mot_de_passe',
-  database: process.env.DB_NAME || 'plat_music',
+  password: process.env.DB_PASSWORD || '123456789',
+  database: process.env.DB_NAME || 'postgres',
 });
 
+// ===== MIDDLEWARE =====
 app.use(cors());
 app.use(express.json());
 
-// ===== ROUTES =====
+// ============================================
+// ===== ROUTES WAITLIST =====
+// ============================================
 
 // GET - Récupérer tous les membres
 app.get("/api/waitlist", async (req, res) => {
@@ -39,7 +38,6 @@ app.get("/api/waitlist", async (req, res) => {
 app.post("/api/waitlist", async (req, res) => {
   const { name, email, phone } = req.body;
   
-  // Validation simple
   if (!name || !email || !phone) {
     return res.status(400).json({
       success: false,
@@ -84,7 +82,6 @@ app.put("/api/waitlist/:id/status", async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
   
-  // Vérifier le statut
   if (!['pending', 'approved', 'rejected'].includes(status)) {
     return res.status(400).json({
       success: false,
@@ -174,33 +171,36 @@ app.get("/api/health", (req, res) => {
   });
 });
 
-// GET - Route d'accueil
+// GET - Route d'accueil (documentation)
 app.get("/", (req, res) => {
   res.json({
     name: "FAZA Platform API",
     version: "1.0.0",
     endpoints: {
       health: "GET /api/health",
-      waitlist: "POST /api/waitlist",
-      allMembers: "GET /api/waitlist",
-      stats: "GET /api/waitlist/stats",
-      updateStatus: "PUT /api/waitlist/:id/status",
-      delete: "DELETE /api/waitlist/:id"
+      waitlist: {
+        create: "POST /api/waitlist",
+        getAll: "GET /api/waitlist",
+        stats: "GET /api/waitlist/stats",
+        updateStatus: "PUT /api/waitlist/:id/status",
+        delete: "DELETE /api/waitlist/:id"
+      }
     }
   });
 });
 
-// ===== DÉMARRAGE =====
+// ============================================
+// ===== DÉMARRAGE DU SERVEUR =====
+// ============================================
 app.listen(PORT, async () => {
   try {
-    // Tester la connexion
     await pool.connect();
-    console.log('✅ PostgreSQL connecté avec succès');
-    console.log(`\n🚀 Serveur FAZA démarré sur http://localhost:${PORT}`);
-    console.log(`📝 API: http://localhost:${PORT}/api/waitlist`);
-    console.log(`💚 Health: http://localhost:${PORT}/api/health\n`);
+    console.log('\x1b[32m✅ PostgreSQL connecté avec succès\x1b[0m');
+    console.log(`\n\x1b[36m🚀 Serveur FAZA démarré sur http://localhost:${PORT}\x1b[0m`);
+    console.log(`\x1b[36m📝 API: http://localhost:${PORT}/api/waitlist\x1b[0m`);
+    console.log(`\x1b[36m💚 Health: http://localhost:${PORT}/api/health\x1b[0m\n`);
   } catch (error) {
-    console.error('❌ Erreur de connexion PostgreSQL:', error.message);
+    console.error('\x1b[31m❌ Erreur de connexion PostgreSQL:\x1b[0m', error.message);
     console.log('\n⚠️  Vérifie que PostgreSQL est installé et en cours d\'exécution');
   }
 });
