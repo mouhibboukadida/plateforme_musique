@@ -68,7 +68,7 @@ app.post("/api/waitlist", async (req, res) => {
     
     res.status(201).json({
       success: true,
-      message: "Inscription réussie ! 🎉",
+      message: "Inscription réussie !",
       data: result.rows[0]
     });
   } catch (err) {
@@ -166,7 +166,7 @@ app.get("/api/waitlist/stats", async (req, res) => {
 app.get("/api/health", (req, res) => {
   res.json({ 
     success: true, 
-    message: "🚀 FAZA API fonctionne !",
+    message: "MB PROD API fonctionne !",
     timestamp: new Date().toISOString()
   });
 });
@@ -174,7 +174,7 @@ app.get("/api/health", (req, res) => {
 // GET - Route d'accueil (documentation)
 app.get("/", (req, res) => {
   res.json({
-    name: "FAZA Platform API",
+    name: "MB PROD API",
     version: "1.0.0",
     endpoints: {
       health: "GET /api/health",
@@ -200,7 +200,7 @@ app.listen(PORT, async () => {
     console.log(`\x1b[36m📝 API: http://localhost:${PORT}/api/waitlist\x1b[0m`);
     console.log(`\x1b[36m💚 Health: http://localhost:${PORT}/api/health\x1b[0m\n`);
   } catch (error) {
-    console.error('\x1b[31m❌ Erreur de connexion PostgreSQL:\x1b[0m', error.message);
-    console.log('\n⚠️  Vérifie que PostgreSQL est installé et en cours d\'exécution');
+    console.error('\x1b[ Erreur de connexion PostgreSQL:\x1b[0m', error.message);
+    console.log('\n  Vérifie que PostgreSQL est installé et en cours d\'exécution');
   }
 });
