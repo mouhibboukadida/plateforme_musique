@@ -1,13 +1,31 @@
-// src/config/db.js
-import pkg from 'pg';
-const { Pool } = pkg;
+const { Pool } = require('pg');
+require('dotenv').config();
 
-const pool = new Pool({
-  host: 'localhost',
-  port: 5432,
-  user: 'postgres',
-  password: 'ton_mot_de_passe',
-  database: 'postgres',
+// Prefer a single DATABASE_URL (works great with Render/Railway/Supabase/Heroku),
+// fall back to individual PG* fields for local dev.
+const pool = process.env.DATABASE_URL
+  ? new Pool({
+      connectionString: process.env.DATABASE_URL,
+      ssl:
+        process.env.NODE_ENV === 'production'
+          ? { rejectUnauthorized: false }
+          : false,
+    })
+  : new Pool({
+      host: process.env.PGHOST,
+      port: process.env.PGPORT,
+      database: process.env.PGDATABASE,
+      user: process.env.PGUSER,
+      password: process.env.PGPASSWORD,
+    });
+
+pool.on('connect', () => {
+  console.log('PostgreSQL pool: new client connected');
 });
 
-export default pool;
+pool.on('error', (err) => {
+  console.error('Unexpected PostgreSQL error on idle client', err);
+  process.exit(-1);
+});
+
+module.exports = pool;
