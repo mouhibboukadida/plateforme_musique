@@ -1,8 +1,6 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
-// Prefer a single DATABASE_URL (works great with Render/Railway/Supabase/Heroku),
-// fall back to individual PG* fields for local dev.
 const pool = process.env.DATABASE_URL
   ? new Pool({
       connectionString: process.env.DATABASE_URL,
