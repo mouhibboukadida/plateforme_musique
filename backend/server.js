@@ -1,206 +1,61 @@
-import express from 'express';
-import cors from 'cors';
-import pkg from 'pg';
-const { Pool } = pkg;
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const helmet = require('helmet');
+const morgan = require('morgan');
+const rateLimit = require('express-rate-limit');
+
+const waitlistRoutes = require('./routes/waitlistRoutes');
+const adminRoutes = require('./routes/adminRoutes');
+const { notFound, errorHandler } = require('./middleware/errorHandler');
 
 const app = express();
+
+// --- Security & core middleware ---
+app.use(helmet());
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || '*',
+    credentials: true,
+  })
+);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+if (process.env.NODE_ENV !== 'production') {
+  app.use(morgan('dev'));
+}
+
+// Basic rate limiting on the public signup route to prevent spam
+const waitlistLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 20,
+  message: { success: false, message: 'Too many requests, please try again later.' },
+});
+
+// Rate limit admin login to slow down brute force attempts
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  message: { success: false, message: 'Too many login attempts, please try again later.' },
+});
+
+// --- Routes ---
+app.get('/api/health', (req, res) => {
+  res.json({ success: true, message: 'FAZA API is running', time: new Date().toISOString() });
+});
+
+app.use('/api/waitlist', waitlistLimiter, waitlistRoutes);
+app.use('/api/admin/login', loginLimiter);
+app.use('/api/admin', adminRoutes);
+
+// --- Error handling ---
+app.use(notFound);
+app.use(errorHandler);
+
 const PORT = process.env.PORT || 5000;
 
-// ===== CONNEXION POSTGRESQL =====
-const pool = new Pool({
-  host: process.env.DB_HOST || 'localhost',
-  port: process.env.DB_PORT || 5432,
-  user: process.env.DB_USER || 'postgres',
-  password: process.env.DB_PASSWORD || '123456789',
-  database: process.env.DB_NAME || 'postgres',
-});
-
-// ===== MIDDLEWARE =====
-app.use(cors());
-app.use(express.json());
-
-// ============================================
-// ===== ROUTES WAITLIST =====
-// ============================================
-
-// GET - Récupérer tous les membres
-app.get("/api/waitlist", async (req, res) => {
-  try {
-    const result = await pool.query("SELECT * FROM waitlist ORDER BY id DESC");
-    res.json({ success: true, data: result.rows });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ success: false, message: err.message });
-  }
-});
-
-// POST - Ajouter un membre
-app.post("/api/waitlist", async (req, res) => {
-  const { name, email, phone } = req.body;
-  
-  if (!name || !email || !phone) {
-    return res.status(400).json({
-      success: false,
-      message: "Tous les champs sont obligatoires"
-    });
-  }
-  
-  try {
-    // Vérifier si l'email existe déjà
-    const existing = await pool.query(
-      "SELECT * FROM waitlist WHERE email = $1",
-      [email]
-    );
-    
-    if (existing.rows.length > 0) {
-      return res.status(400).json({
-        success: false,
-        message: "Cet email est déjà inscrit"
-      });
-    }
-    
-    // Ajouter le membre
-    const result = await pool.query(
-      `INSERT INTO waitlist (name, email, phone) 
-       VALUES ($1, $2, $3) RETURNING *`,
-      [name, email, phone]
-    );
-    
-    res.status(201).json({
-      success: true,
-      message: "Inscription réussie !",
-      data: result.rows[0]
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ success: false, message: err.message });
-  }
-});
-
-// PUT - Mettre à jour le statut
-app.put("/api/waitlist/:id/status", async (req, res) => {
-  const { id } = req.params;
-  const { status } = req.body;
-  
-  if (!['pending', 'approved', 'rejected'].includes(status)) {
-    return res.status(400).json({
-      success: false,
-      message: "Statut invalide"
-    });
-  }
-  
-  try {
-    const result = await pool.query(
-      `UPDATE waitlist SET status = $1 WHERE id = $2 RETURNING *`,
-      [status, id]
-    );
-    
-    if (result.rows.length === 0) {
-      return res.status(404).json({
-        success: false,
-        message: "Membre non trouvé"
-      });
-    }
-    
-    res.json({
-      success: true,
-      message: "Statut mis à jour",
-      data: result.rows[0]
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ success: false, message: err.message });
-  }
-});
-
-// DELETE - Supprimer un membre
-app.delete("/api/waitlist/:id", async (req, res) => {
-  const { id } = req.params;
-  
-  try {
-    const result = await pool.query(
-      "DELETE FROM waitlist WHERE id = $1 RETURNING *",
-      [id]
-    );
-    
-    if (result.rows.length === 0) {
-      return res.status(404).json({
-        success: false,
-        message: "Membre non trouvé"
-      });
-    }
-    
-    res.json({
-      success: true,
-      message: "Membre supprimé"
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ success: false, message: err.message });
-  }
-});
-
-// GET - Statistiques
-app.get("/api/waitlist/stats", async (req, res) => {
-  try {
-    const result = await pool.query(`
-      SELECT 
-        COUNT(*) as total,
-        COUNT(CASE WHEN status = 'pending' THEN 1 END) as pending,
-        COUNT(CASE WHEN status = 'approved' THEN 1 END) as approved,
-        COUNT(CASE WHEN status = 'rejected' THEN 1 END) as rejected
-      FROM waitlist
-    `);
-    
-    res.json({
-      success: true,
-      data: result.rows[0]
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ success: false, message: err.message });
-  }
-});
-
-// GET - Health check
-app.get("/api/health", (req, res) => {
-  res.json({ 
-    success: true, 
-    message: "MB PROD API fonctionne !",
-    timestamp: new Date().toISOString()
-  });
-});
-
-// GET - Route d'accueil (documentation)
-app.get("/", (req, res) => {
-  res.json({
-    name: "MB PROD API",
-    version: "1.0.0",
-    endpoints: {
-      health: "GET /api/health",
-      waitlist: {
-        create: "POST /api/waitlist",
-        getAll: "GET /api/waitlist",
-        stats: "GET /api/waitlist/stats",
-        updateStatus: "PUT /api/waitlist/:id/status",
-        delete: "DELETE /api/waitlist/:id"
-      }
-    }
-  });
-});
-
-// ============================================
-// ===== DÉMARRAGE DU SERVEUR =====
-// ============================================
-app.listen(PORT, async () => {
-  try {
-    await pool.connect();
-    console.log('\x1b[32m✅ PostgreSQL connecté avec succès\x1b[0m');
-    console.log(`\n\x1b[36m🚀 Serveur FAZA démarré sur http://localhost:${PORT}\x1b[0m`);
-    console.log(`\x1b[36m📝 API: http://localhost:${PORT}/api/waitlist\x1b[0m`);
-    console.log(`\x1b[36m💚 Health: http://localhost:${PORT}/api/health\x1b[0m\n`);
-  } catch (error) {
-    console.error('\x1b[ Erreur de connexion PostgreSQL:\x1b[0m', error.message);
-    console.log('\n  Vérifie que PostgreSQL est installé et en cours d\'exécution');
-  }
+app.listen(PORT, () => {
+  console.log(`🚀 FAZA backend running on http://localhost:${PORT}`);
+  console.log(`   Environment: ${process.env.NODE_ENV || 'development'}`);
 });
