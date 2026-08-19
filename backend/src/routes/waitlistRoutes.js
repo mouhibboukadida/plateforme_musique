@@ -1,6 +1,6 @@
-const express = require('express');
-const { body } = require('express-validator');
-const { joinWaitlist } = require('../controllers/waitlistController');
+import express from 'express';
+import { body } from 'express-validator';
+import { joinWaitlist } from '../controllers/waitlistController.js';
 
 const router = express.Router();
 
@@ -19,4 +19,4 @@ router.post(
   joinWaitlist
 );
 
-module.exports = router;
+export default router;

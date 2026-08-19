@@ -1,8 +1,8 @@
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const { validationResult } = require('express-validator');
-const pool = require('../config/db');
-const { asyncHandler } = require('../middleware/errorHandler');
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { validationResult } from 'express-validator';
+import pool from '../config/db.js';
+import { asyncHandler } from '../middleware/errorHandler.js';
 
 const signToken = (admin) =>
   jwt.sign(
@@ -13,7 +13,7 @@ const signToken = (admin) =>
 
 // @route  POST /api/admin/login
 // @access Public
-const login = asyncHandler(async (req, res) => {
+export const login = asyncHandler(async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ success: false, message: errors.array()[0].msg });
@@ -49,7 +49,7 @@ const login = asyncHandler(async (req, res) => {
 
 // @route  GET /api/admin/verify
 // @access Private
-const verify = asyncHandler(async (req, res) => {
+export const verify = asyncHandler(async (req, res) => {
   const result = await pool.query('SELECT id, name, email FROM admins WHERE id = $1', [
     req.admin.id,
   ]);
@@ -65,7 +65,7 @@ const verify = asyncHandler(async (req, res) => {
 
 // @route  GET /api/admin/waitlist
 // @access Private
-const getWaitlist = asyncHandler(async (req, res) => {
+export const getWaitlist = asyncHandler(async (req, res) => {
   const result = await pool.query(
     'SELECT id, name, email, phone, status, created_at, updated_at FROM waitlist ORDER BY created_at DESC'
   );
@@ -75,7 +75,7 @@ const getWaitlist = asyncHandler(async (req, res) => {
 
 // @route  PUT /api/admin/waitlist/:id/status
 // @access Private
-const updateStatus = asyncHandler(async (req, res) => {
+export const updateStatus = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
 
@@ -102,7 +102,7 @@ const updateStatus = asyncHandler(async (req, res) => {
 
 // @route  DELETE /api/admin/waitlist/:id
 // @access Private
-const deleteEntry = asyncHandler(async (req, res) => {
+export const deleteEntry = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
   const result = await pool.query('DELETE FROM waitlist WHERE id = $1 RETURNING id', [id]);
@@ -113,5 +113,3 @@ const deleteEntry = asyncHandler(async (req, res) => {
 
   res.json({ success: true, message: 'Entry deleted' });
 });
-
-module.exports = { login, verify, getWaitlist, updateStatus, deleteEntry };

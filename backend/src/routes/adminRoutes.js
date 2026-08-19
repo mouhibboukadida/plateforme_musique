@@ -1,13 +1,13 @@
-const express = require('express');
-const { body } = require('express-validator');
-const { protect } = require('../middleware/auth');
-const {
+import express from 'express';
+import { body } from 'express-validator';
+import { protect } from '../middleware/auth.js';
+import {
   login,
   verify,
   getWaitlist,
   updateStatus,
   deleteEntry,
-} = require('../controllers/adminController');
+} from '../controllers/adminController.js';
 
 const router = express.Router();
 
@@ -25,4 +25,4 @@ router.get('/waitlist', protect, getWaitlist);
 router.put('/waitlist/:id/status', protect, updateStatus);
 router.delete('/waitlist/:id', protect, deleteEntry);
 
-module.exports = router;
+export default router;

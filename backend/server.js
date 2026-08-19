@@ -1,13 +1,12 @@
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const morgan = require('morgan');
-const rateLimit = require('express-rate-limit');
-
-const waitlistRoutes = require('./routes/waitlistRoutes');
-const adminRoutes = require('./routes/adminRoutes');
-const { notFound, errorHandler } = require('./middleware/errorHandler');
+import 'dotenv/config';
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import morgan from 'morgan';
+import rateLimit from 'express-rate-limit';
+import waitlistRoutes from './src/routes/waitlistRoutes.js';
+import adminRoutes from './src/routes/adminRoutes.js';
+import { notFound, errorHandler } from './src/middleware/errorHandler.js';
 
 const app = express();
 

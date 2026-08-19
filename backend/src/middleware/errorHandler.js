@@ -1,9 +1,9 @@
 // Catches errors thrown in async route handlers wrapped with asyncHandler
-const asyncHandler = (fn) => (req, res, next) =>
+export const asyncHandler = (fn) => (req, res, next) =>
   Promise.resolve(fn(req, res, next)).catch(next);
 
 // 404 handler
-const notFound = (req, res, next) => {
+export const notFound = (req, res, next) => {
   res.status(404).json({
     success: false,
     message: `Route not found: ${req.method} ${req.originalUrl}`,
@@ -12,7 +12,7 @@ const notFound = (req, res, next) => {
 
 // Central error handler
 // eslint-disable-next-line no-unused-vars
-const errorHandler = (err, req, res, next) => {
+export const errorHandler = (err, req, res, next) => {
   console.error(err);
 
   // Postgres unique violation
@@ -29,5 +29,3 @@ const errorHandler = (err, req, res, next) => {
     message: err.message || 'Internal server error',
   });
 };
-
-module.exports = { asyncHandler, notFound, errorHandler };

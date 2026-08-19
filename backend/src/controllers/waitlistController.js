@@ -1,11 +1,11 @@
-const { validationResult } = require('express-validator');
-const pool = require('../config/db');
-const { asyncHandler } = require('../middleware/errorHandler');
+import { validationResult } from 'express-validator';
+import pool from '../config/db.js';
+import { asyncHandler } from '../middleware/errorHandler.js';
 
 // @route  POST /api/waitlist
 // @desc   Public: join the waitlist
 // @access Public
-const joinWaitlist = asyncHandler(async (req, res) => {
+export const joinWaitlist = asyncHandler(async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({
@@ -40,5 +40,3 @@ const joinWaitlist = asyncHandler(async (req, res) => {
     data: result.rows[0],
   });
 });
-
-module.exports = { joinWaitlist };
